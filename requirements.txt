@@ -1,3 +1,5 @@
-# No pip dependencies for stdlib server
-# Add only if bin features require them:
-# shapely>=2.0  (for GeoJSON bin lookup)
+# City of Melton V10.3 — Python dependencies
+# Server uses stdlib http.server + urllib.request (direct Anthropic API calls),
+# so the runtime has no hard external deps. Entries below are present for
+# parity with the V10 fleet template and as optional fallbacks.
+anthropic>=0.40.0

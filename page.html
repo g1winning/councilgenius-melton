@@ -1,1219 +1,751 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CouncilGenius - City of Melton</title>
-    <style>
-        :root {
-            --primary: #00695C;
-            --primary-light: #00897B;
-            --secondary: #00897B;
-            --accent: #FFA000;
-            --accent-dark: #FF8F00;
-            --text-dark: #1A1A2E;
-            --text-light: #757575;
-            --border-light: #E0E0E0;
-            --bg-light: #E0F2F1;
-            --white: #FFFFFF;
-            --success: #4CAF50;
-            --error: #D32F2F;
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --spacing-2xl: 3rem;
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            color: var(--text-dark);
-            background-color: var(--bg-light);
-            line-height: 1.6;
-        }
-
-        /* Skip Link */
-        #skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background-color: var(--primary);
-            color: var(--white);
-            padding: var(--spacing-sm) var(--spacing-md);
-            text-decoration: none;
-            z-index: 100;
-            border-radius: 0 0 var(--radius-md) 0;
-        }
-
-        #skip-link:focus {
-            top: 0;
-        }
-
-        /* Header */
-        header {
-            background-color: var(--white);
-            border-bottom: 2px solid var(--primary);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: var(--spacing-md) var(--spacing-lg);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-
-        .header-brand h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin: 0;
-        }
-
-        .header-brand p {
-            font-size: 0.875rem;
-            color: var(--text-light);
-            margin: 0;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: var(--spacing-lg);
-        }
-
-        nav a {
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: 500;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--radius-sm);
-            transition: all 0.2s ease;
-        }
-
-        nav a:hover,
-        nav a:focus {
-            background-color: var(--primary);
-            color: var(--white);
-            outline: 2px solid transparent;
-        }
-
-        nav a:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--primary);
-            padding: var(--spacing-sm);
-        }
-
-        .menu-toggle:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: var(--white);
-            padding: var(--spacing-2xl) var(--spacing-lg);
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-md);
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.125rem;
-            margin-bottom: var(--spacing-lg);
-            opacity: 0.95;
-        }
-
-        /* Quick Services Grid */
-        .services-section {
-            max-width: 1200px;
-            margin: var(--spacing-2xl) auto;
-            padding: 0 var(--spacing-lg);
-        }
-
-        .services-section h3 {
-            font-size: 1.75rem;
-            color: var(--primary);
-            margin-bottom: var(--spacing-xl);
-            text-align: center;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: var(--spacing-md);
-        }
-
-        .service-btn {
-            background-color: var(--white);
-            border: 2px solid var(--border-light);
-            color: var(--text-dark);
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-
-        .service-btn:hover {
-            background-color: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 105, 92, 0.15);
-        }
-
-        .service-btn:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        /* Chat Section */
-        .chat-section {
-            max-width: 1200px;
-            margin: var(--spacing-2xl) auto;
-            padding: 0 var(--spacing-lg);
-        }
-
-        .chat-container {
-            background-color: var(--white);
-            border-radius: var(--radius-lg);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 500px;
-        }
-
-        .chat-header {
-            background-color: var(--primary);
-            color: var(--white);
-            padding: var(--spacing-lg);
-            font-weight: 600;
-            font-size: 1.125rem;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: var(--spacing-lg);
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-        }
-
-        .message {
-            display: flex;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .message.bot {
-            justify-content: flex-start;
-        }
-
-        .message.user {
-            justify-content: flex-end;
-        }
-
-        .message-bubble {
-            max-width: 70%;
-            padding: var(--spacing-md) var(--spacing-lg);
-            border-radius: var(--radius-lg);
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            line-height: 1.5;
-        }
-
-        .message.bot .message-bubble {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            border-left: 4px solid var(--primary);
-        }
-
-        .message.user .message-bubble {
-            background-color: var(--primary);
-            color: var(--white);
-        }
-
-        .message a {
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .message.bot a {
-            color: var(--primary);
-        }
-
-        .message.user a {
-            color: var(--accent-dark);
-        }
-
-        .typing-indicator {
-            display: flex;
-            gap: var(--spacing-xs);
-            align-items: center;
-            padding: var(--spacing-md) var(--spacing-lg);
-            background-color: var(--bg-light);
-            border-radius: var(--radius-lg);
-            width: fit-content;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--text-light);
-            border-radius: 50%;
-            animation: typing 1.4s infinite;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typing {
-            0%, 60%, 100% {
-                opacity: 0.5;
-            }
-            30% {
-                opacity: 1;
-            }
-        }
-
-        .feedback-widget {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-sm);
-            font-size: 0.875rem;
-        }
-
-        .feedback-btn {
-            background: none;
-            border: 1px solid var(--border-light);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            cursor: pointer;
-            border-radius: var(--radius-sm);
-            transition: all 0.2s ease;
-            color: var(--text-light);
-        }
-
-        .feedback-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background-color: var(--bg-light);
-        }
-
-        .feedback-btn:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 1px;
-        }
-
-        .feedback-btn[aria-pressed="true"] {
-            background-color: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-        }
-
-        .suggestion-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .chip {
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-light);
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.875rem;
-            color: var(--text-dark);
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .chip:hover {
-            background-color: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-        }
-
-        .chip:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        /* Chat Input */
-        .chat-input-area {
-            padding: var(--spacing-lg);
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            gap: var(--spacing-sm);
-        }
-
-        .input-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chat-input-label {
-            position: absolute;
-            left: -10000px;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: var(--spacing-md);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-md);
-            font-family: inherit;
-            font-size: 0.95rem;
-            resize: none;
-            max-height: 100px;
-            color: var(--text-dark);
-            transition: border-color 0.2s ease;
-        }
-
-        .chat-input:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: -2px;
-            border-color: var(--primary);
-        }
-
-        .chat-input:disabled {
-            background-color: var(--bg-light);
-            color: var(--text-light);
-        }
-
-        .input-controls {
-            display: flex;
-            gap: var(--spacing-sm);
-        }
-
-        .voice-btn,
-        .send-btn {
-            padding: var(--spacing-md);
-            border: 1px solid var(--border-light);
-            background-color: var(--white);
-            color: var(--text-dark);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            min-width: 44px;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .send-btn {
-            background-color: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-        }
-
-        .send-btn:hover:not(:disabled) {
-            background-color: var(--primary-light);
-            border-color: var(--primary-light);
-        }
-
-        .send-btn:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        .send-btn:disabled {
-            background-color: var(--border-light);
-            color: var(--text-light);
-            border-color: var(--border-light);
-            cursor: not-allowed;
-        }
-
-        .voice-btn:hover {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
-            color: var(--white);
-        }
-
-        .voice-btn:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--primary);
-            color: var(--white);
-            padding: var(--spacing-2xl) var(--spacing-lg);
-            margin-top: var(--spacing-2xl);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--spacing-xl);
-        }
-
-        .footer-section h4 {
-            font-size: 1rem;
-            margin-bottom: var(--spacing-md);
-            font-weight: 600;
-        }
-
-        .footer-section p,
-        .footer-section a {
-            font-size: 0.875rem;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            display: block;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .footer-section a:hover,
-        .footer-section a:focus {
-            color: var(--accent);
-        }
-
-        .footer-divider {
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            margin-top: var(--spacing-xl);
-            padding-top: var(--spacing-lg);
-        }
-
-        .acknowledgement {
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.85);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .powered-by {
-            text-align: center;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: var(--spacing-lg);
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                flex-direction: column;
-                background-color: var(--white);
-                border-bottom: 2px solid var(--primary);
-                padding: var(--spacing-md);
-                gap: var(--spacing-sm);
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
-            nav ul.active {
-                display: flex;
-            }
-
-            .menu-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .header-container {
-                padding: var(--spacing-md);
-            }
-
-            .hero h2 {
-                font-size: 1.75rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .services-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            }
-
-            .service-btn {
-                padding: var(--spacing-md);
-                min-height: 100px;
-                font-size: 0.85rem;
-            }
-
-            .chat-container {
-                height: 450px;
-            }
-
-            .message-bubble {
-                max-width: 85%;
-            }
-
-            .chat-input-area {
-                flex-wrap: wrap;
-            }
-
-            .suggestion-chips {
-                gap: var(--spacing-xs);
-            }
-
-            .chip {
-                font-size: 0.8rem;
-                padding: var(--spacing-xs) var(--spacing-sm);
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Accessibility */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* Focus visible for keyboard navigation */
-        :focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        /* Contrast ratio validation */
-        a:not(.service-btn):not(.chip) {
-            color: var(--primary);
-            text-decoration: underline;
-        }
-
-        a:not(.service-btn):not(.chip):visited {
-            color: #004D47;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CouncilGenius &mdash; City of Melton</title>
+  <link rel="icon" href="https://www.melton.vic.gov.au/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal:   #00695C;
+      --teal2:  #00897B;
+      --amber:  #FFA000;
+      --amber2: #FFB74D;
+      --dark:   #00473F;
+      --black:  #0D1B2A;
+      --text-dim: #90A4AE;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; font-size: 15px; color: #333; background: #fff; }
+
+    /* Skip link */
+    .skip-link { position: absolute; top: -999px; left: 8px; background: var(--amber); color: #fff; padding: 8px 16px; font-weight: 700; font-size: 13px; border-radius: 0 0 4px 4px; z-index: 9999; text-decoration: none; }
+    .skip-link:focus { top: 0; }
+    :focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+    /* Header */
+    .site-header { background: var(--teal); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+    .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-shield { width: 38px; height: 38px; background: var(--amber); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-shield svg { width: 22px; height: 22px; fill: #fff; }
+    .logo-wordmark { display: flex; flex-direction: column; line-height: 1.15; }
+    .logo-wordmark strong { font-size: 15px; font-weight: 700; color: #fff; }
+    .logo-wordmark span { font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.72); letter-spacing: 0.02em; }
+    .site-nav { display: flex; list-style: none; gap: 2px; }
+    .site-nav a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; font-weight: 500; padding: 8px 13px; border-radius: 4px; transition: background .15s, color .15s; }
+    .site-nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+    /* Hero */
+    .hero { position: relative; height: 400px; overflow: hidden; }
+    .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,40,36,.38) 0%, rgba(0,40,36,.72) 100%); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 24px; }
+    .hero-title { color: #fff; font-size: clamp(26px, 4vw, 50px); font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,.35); }
+    .hero-sub { color: rgba(255,255,255,.88); font-size: clamp(14px, 2vw, 19px); margin-top: 10px; font-weight: 400; }
+
+    /* Quick services */
+    .quick-services { background: #fff; padding: 40px 24px; border-bottom: 1px solid #eee; }
+    .qs-inner { max-width: 1200px; margin: 0 auto; }
+    .qs-heading { font-size: 18px; font-weight: 700; color: var(--teal); margin-bottom: 20px; }
+    .qs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; }
+    .qs-item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 18px 10px; border-radius: 8px; background: #E0F2F1; text-decoration: none; color: var(--teal); font-size: 12.5px; font-weight: 500; gap: 8px; border: 1.5px solid transparent; transition: border-color .15s, background .15s; cursor: pointer; font-family: inherit; }
+    .qs-item:hover { border-color: var(--amber); background: #B2DFDB; }
+    .qs-icon { font-size: 26px; line-height: 1; }
+
+    /* CouncilGenius section */
+    .cg-section { background: #E0F2F1; overflow: hidden; }
+    .cg-inner { max-width: 1200px; margin: 0 auto; padding: 40px 24px; overflow: hidden; }
+    .cg-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      height: 440px;
+      transition: grid-template-columns 0.32s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* Engaged */
+    .cg-section.cg-engaged { padding: 16px 0; }
+    .cg-section.cg-engaged .cg-inner { display: flex; justify-content: center; padding: 0 20px; overflow: hidden; }
+    .cg-section.cg-engaged .cg-wrapper { grid-template-columns: 0px 1fr; }
+    .cg-section.cg-engaged .cg-promo { opacity: 0; pointer-events: none; padding: 0; }
+    .cg-section.cg-engaged .cg-panel { max-width: 760px; width: 100%; height: 440px; margin: 0 auto; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 32px rgba(0,0,0,.22); }
+
+    .cg-promo { min-width: 0; overflow: hidden; height: 440px; padding-right: 40px; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.22s ease, padding 0.32s cubic-bezier(0.4,0,0.2,1); }
+    .cg-promo-heading { font-size: 21px; font-weight: 700; color: var(--teal); margin-bottom: 16px; line-height: 1.3; }
+    .cg-promo-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .cg-promo-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: #444; line-height: 1.45; }
+    .cg-promo-list li::before { content: '\2713'; color: var(--amber); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .cg-promo-badge { display: inline-block; margin-top: 20px; background: var(--amber); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+
+    .cg-panel { background: var(--black); display: flex; flex-direction: column; height: 440px; overflow: hidden; transition: height .32s cubic-bezier(0.4,0,0.2,1), max-width .32s cubic-bezier(0.4,0,0.2,1); }
+
+    /* Chat header */
+    .cg-header { background: var(--amber); padding: 11px 14px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .cg-dot { width: 9px; height: 9px; background: var(--amber2); border-radius: 50%; flex-shrink: 0; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.45} }
+    .cg-htext { flex: 1; }
+    .cg-hname { font-size: 16px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .cg-hsub  { font-size: 13px; color: rgba(255,255,255,.82); }
+    .tts-btn { background: none; border: none; cursor: pointer; font-size: 13px; color: rgba(255,255,255,.6); padding: 3px 6px; border-radius: 3px; transition: color .15s; font-family: inherit; }
+    .tts-btn:hover { color: #fff; }
+
+    /* Messages */
+    .cg-msgs { flex: 1; overflow-y: auto; padding: 12px 12px 6px; display: flex; flex-direction: column; gap: 9px; scroll-behavior: smooth; }
+    .cg-msgs::-webkit-scrollbar { width: 4px; }
+    .cg-msgs::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 4px; }
+    .msg { max-width: 88%; padding: 9px 12px; border-radius: 12px; font-size: 15px; line-height: 1.5; word-break: break-word; }
+    .msg a { color: var(--amber2); text-decoration: underline; }
+    .msg.bot  { background: rgba(255,255,255,.1); color: #f0f0f0; align-self: flex-start; border-bottom-left-radius: 3px; }
+    .msg.user { background: var(--amber); color: #fff; align-self: flex-end; border-bottom-right-radius: 3px; }
+    .message-bot { max-width: 88%; align-self: flex-start; }
+    .message-text { background: rgba(255,255,255,.1); color: #f0f0f0; padding: 12px; border-radius: 12px; font-size: 15px; line-height: 1.5; }
+    .message-text p { margin: 8px 0; }
+    .message-text p:first-child { margin-top: 0; }
+    .message-text p:last-child { margin-bottom: 0; }
+    .message-text strong { color: #fff; }
+    .message-text ul { margin: 8px 0; padding-left: 1.3em; }
+    .message-text li { margin: 5px 0; }
+    .msg.typing span { display: inline-block; width: 7px; height: 7px; background: rgba(255,255,255,.5); border-radius: 50%; margin: 0 2px; animation: bounce 1s infinite; }
+    .msg.typing span:nth-child(2) { animation-delay: .15s; }
+    .msg.typing span:nth-child(3) { animation-delay: .3s; }
+    @keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-6px)} }
+    .fb-row { display: flex; gap: 6px; align-self: flex-start; margin-top: -3px; }
+    .fb-btn { background: none; border: none; cursor: pointer; font-size: 14px; opacity: 0.55; padding: 2px 4px; border-radius: 3px; transition: opacity .15s; }
+    .fb-btn:hover,.fb-btn.active { opacity: 1; }
+
+    /* Hint + Chips */
+    .cg-hint { font-size: 12px; color: rgba(255,255,255,.5); text-align: center; padding: 3px 12px; flex-shrink: 0; }
+    .cg-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 12px; flex-shrink: 0; }
+    .chip { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); color: rgba(255,255,255,.9); font-size: 13px; padding: 5px 11px; border-radius: 20px; cursor: pointer; transition: background .15s; white-space: nowrap; font-family: inherit; }
+    .chip:hover { background: rgba(255,255,255,.2); }
+
+    /* Input row */
+    .cg-input-row { display: flex; align-items: flex-end; gap: 6px; padding: 8px 10px 10px; flex-shrink: 0; border-top: 1px solid rgba(255,255,255,.08); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .cg-ta { flex: 1; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); border-radius: 8px; padding: 9px 12px; font-size: 15px; font-family: inherit; color: #fff; resize: none; min-height: 40px; max-height: 120px; line-height: 1.4; outline: none; }
+    .cg-ta::placeholder { color: rgba(255,255,255,.42); }
+    .cg-ta:focus { border-color: var(--amber2); }
+    .send-btn { background: var(--amber); border: none; border-radius: 8px; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s; }
+    .send-btn:hover { background: var(--amber2); }
+    .send-btn svg { width: 18px; height: 18px; fill: #fff; }
+    .mic-btn { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); border-radius: 8px; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s; }
+    .mic-btn:hover { background: rgba(255,255,255,.2); }
+    .mic-btn svg { width: 18px; height: 18px; fill: rgba(255,255,255,.8); }
+    .mic-btn.recording { background: rgba(220,50,50,.3); border-color: rgba(220,50,50,.6); animation: pulse 1s infinite; }
+
+    /* V10: PDF shortcuts */
+    .cg-pdf-shortcuts { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 12px 0; flex-shrink: 0; }
+    .pdf-shortcut { background: rgba(124,193,204,.18); border: 1px solid rgba(124,193,204,.45); color: #e9f6f9; font-size: 12px; padding: 4px 10px; border-radius: 14px; cursor: pointer; font-family: inherit; transition: background .15s; }
+    .pdf-shortcut:hover { background: rgba(124,193,204,.35); }
+    .pdf-shortcut::before { content: '\1F4C4 '; opacity: .7; }
+
+    /* V10: autocomplete dropdown */
+    .cg-autocomplete-wrap { position: relative; flex: 1; }
+    .cg-autocomplete { position: absolute; left: 0; right: 0; bottom: calc(100% + 4px); background: #1a3a35; border: 1px solid rgba(255,255,255,.22); border-radius: 8px; max-height: 180px; overflow-y: auto; z-index: 50; display: none; box-shadow: 0 -4px 12px rgba(0,0,0,.35); }
+    .cg-autocomplete.show { display: block; }
+    .cg-autocomplete-item { padding: 8px 12px; font-size: 14px; color: #e6e6f0; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .cg-autocomplete-item:last-child { border-bottom: none; }
+    .cg-autocomplete-item:hover, .cg-autocomplete-item.active { background: rgba(124,193,204,.2); }
+
+    /* V10: clarify card */
+    .cg-clarify { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+    .cg-clarify-btn { text-align: left; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: #f0f0f0; font-family: inherit; font-size: 13px; padding: 8px 10px; border-radius: 6px; cursor: pointer; transition: background .15s; }
+    .cg-clarify-btn:hover { background: rgba(124,193,204,.2); border-color: var(--amber2); }
+    .cg-clarify-btn b { color: #fff; display: block; margin-bottom: 2px; }
+    .cg-clarify-btn span { color: rgba(255,255,255,.6); font-size: 11px; }
+
+    /* Footer */
+    .site-footer { background: var(--teal); color: rgba(255,255,255,.82); padding: 48px 24px 24px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
+    .f-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; text-decoration: none; }
+    .f-shield { width: 34px; height: 34px; background: var(--amber); border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .f-shield svg { width: 20px; height: 20px; fill: #fff; }
+    .f-wordmark strong { font-size: 14px; font-weight: 700; color: #fff; display: block; line-height: 1.15; }
+    .f-wordmark span { font-size: 11px; color: rgba(255,255,255,.6); }
+    .f-acknowledgement { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.65; margin-bottom: 16px; }
+    .f-social { display: flex; gap: 10px; }
+    .f-social a { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: rgba(255,255,255,.1); border-radius: 50%; color: rgba(255,255,255,.8); text-decoration: none; font-size: 12px; font-weight: 700; transition: background .15s; }
+    .f-social a:hover { background: var(--amber); color: #fff; }
+    .footer-col h4 { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col ul a { color: rgba(255,255,255,.75); text-decoration: none; font-size: 13.5px; transition: color .15s; }
+    .footer-col ul a:hover { color: #fff; }
+    .footer-col p { font-size: 13.5px; color: rgba(255,255,255,.75); margin-bottom: 5px; }
+    .footer-col a { color: rgba(255,255,255,.75); text-decoration: none; }
+    .footer-col a:hover { color: #fff; }
+    .footer-col strong { color: rgba(255,255,255,.9); font-weight: 600; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.12); padding-top: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 12px; color: rgba(255,255,255,.45); }
+    .footer-bottom a { color: rgba(255,255,255,.45); text-decoration: none; }
+    .footer-bottom a:hover { color: rgba(255,255,255,.8); }
+    .f-emergency { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 10px; }
+    .f-emergency a { color: rgba(255,255,255,.7); }
+
+    @media (max-width: 768px) {
+      .site-nav { display: none; }
+      .cg-wrapper { grid-template-columns: 1fr !important; }
+      .cg-promo { display: none; }
+      .cg-panel { height: 440px !important; border-radius: 0 !important; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .hero { height: 260px; }
+      .qs-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
 </head>
 <body>
-    <a href="#main" id="skip-link">Skip to main content</a>
 
-    <header role="banner">
-        <div class="header-container">
-            <div class="header-brand">
-                <div>
-                    <h1>CouncilGenius</h1>
-                    <p>City of Melton</p>
-                </div>
-            </div>
-            <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span aria-hidden="true">&#9776;</span>
-            </button>
-            <nav role="navigation" aria-label="Main navigation">
-                <ul>
-                    <li><a href="https://www.melton.vic.gov.au" target="_blank">Home</a></li>
-                    <li><a href="https://www.melton.vic.gov.au/Services" target="_blank">Services</a></li>
-                    <li><a href="tel:0397477200">Contact</a></li>
-                    <li><a href="https://www.melton.vic.gov.au" target="_blank">Council Website</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<a class="skip-link" href="#cg-chat-region">Skip to CouncilGenius assistant</a>
 
-    <main id="main" role="main">
-        <section class="hero" aria-label="Welcome banner">
-            <div class="hero-content">
-                <h2>Welcome to CouncilGenius</h2>
-                <p>Your guide to City of Melton services. Ask about bins, rates, planning, permits, and more.</p>
-            </div>
-        </section>
+<!-- Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://www.melton.vic.gov.au/" class="logo" aria-label="City of Melton &mdash; home">
+      <div class="logo-shield" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6L12 2z"/></svg>
+      </div>
+      <div class="logo-wordmark">
+        <strong>City of Melton</strong>
+        <span>Victoria, Australia</span>
+      </div>
+    </a>
+    <nav aria-label="Main navigation">
+      <ul class="site-nav">
+        <li><a href="https://www.melton.vic.gov.au/Council">Council</a></li>
+        <li><a href="https://www.melton.vic.gov.au/Residents">Residents</a></li>
+        <li><a href="https://www.melton.vic.gov.au/Business">Business</a></li>
+        <li><a href="https://www.melton.vic.gov.au/Things-To-Do">Things To Do</a></li>
+        <li><a href="https://www.melton.vic.gov.au/Council/Sustainability-and-Environment">Environment</a></li>
+        <li><a href="https://www.melton.vic.gov.au/Council/Contact-Us">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-        <section class="services-section" aria-label="Quick services">
-            <h3>Quick Services</h3>
-            <div class="services-grid">
-                <button class="service-btn" aria-label="Bins and Recycling" data-query="When are my bins collected and what goes in each bin?">Bins & Recycling</button>
-                <button class="service-btn" aria-label="Find my bin day" data-query="How do I find out which day my bins are collected?">Find My Bin Day</button>
-                <button class="service-btn" aria-label="Pay your rates online" data-query="How do I pay my council rates online?">Pay Rates</button>
-                <button class="service-btn" aria-label="Apply for a planning permit" data-query="How do I apply for a planning permit and what are the fees?">Planning Permits</button>
-                <button class="service-btn" aria-label="Register a pet" data-query="How do I register my dog or cat and what are the registration fees?">Pet Registration</button>
-                <button class="service-btn" aria-label="Find libraries in your area" data-query="What are the library locations and opening hours?">Libraries</button>
-                <button class="service-btn" aria-label="Find leisure centres" data-query="What leisure centres and swimming pools does council manage?">Leisure Centres</button>
-                <button class="service-btn" aria-label="Report an issue in your area" data-query="How do I report a pothole, broken footpath, or maintenance issue to council?">Report an Issue</button>
-            </div>
-        </section>
+<!-- Hero -->
+<section class="hero" aria-label="City of Melton landscape">
+  <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1920&q=80"
+       alt="Open grasslands and sky &mdash; City of Melton" width="1920" height="400" loading="eager">
+  <div class="hero-overlay">
+    <h1 class="hero-title">Welcome to the City of Melton</h1>
+    <p class="hero-sub">Your guide to City of Melton services &mdash; 24 hours a day</p>
+  </div>
+</section>
 
-        <section class="chat-section" aria-label="Chat assistant">
-            <div class="chat-container" role="complementary" aria-label="CouncilGenius chat assistant">
-                <div class="chat-header">
-                    CouncilGenius Assistant
-                </div>
+<!-- Quick services -->
+<section class="quick-services" aria-label="Council services">
+  <div class="qs-inner">
+    <h2 class="qs-heading">Council Services</h2>
+    <div class="qs-grid">
+      <button class="qs-item" data-query="How do I pay my City of Melton rates and what payment methods are accepted?">
+        <span class="qs-icon" aria-hidden="true">&#128176;</span>
+        <span>Rates &amp; Payments</span>
+      </button>
+      <button class="qs-item" data-query="How do I find out which bin goes out on what day at my City of Melton address?">
+        <span class="qs-icon" aria-hidden="true">&#9851;&#65039;</span>
+        <span>Bins &amp; Waste</span>
+      </button>
+      <button class="qs-item" data-query="How do I book a hard-waste collection in the City of Melton?">
+        <span class="qs-icon" aria-hidden="true">&#128230;</span>
+        <span>Hard Waste</span>
+      </button>
+      <button class="qs-item" data-query="Do I need a planning permit in the City of Melton and how do I lodge an application?">
+        <span class="qs-icon" aria-hidden="true">&#128208;</span>
+        <span>Planning &amp; Building</span>
+      </button>
+      <button class="qs-item" data-query="How do I register my dog or cat with the City of Melton?">
+        <span class="qs-icon" aria-hidden="true">&#128054;</span>
+        <span>Pets &amp; Animals</span>
+      </button>
+      <button class="qs-item" data-query="Where is my nearest City of Melton library and what are the opening hours?">
+        <span class="qs-icon" aria-hidden="true">&#128218;</span>
+        <span>Libraries</span>
+      </button>
+      <button class="qs-item" data-query="What parks, playgrounds and sports facilities are available in the City of Melton?">
+        <span class="qs-icon" aria-hidden="true">&#127795;</span>
+        <span>Parks &amp; Recreation</span>
+      </button>
+      <button class="qs-item" data-query="How do I report a pothole, fallen tree or maintenance issue in the City of Melton?">
+        <span class="qs-icon" aria-hidden="true">&#128225;</span>
+        <span>Report an Issue</span>
+      </button>
+      <button class="qs-item" data-query="When is the next City of Melton Council meeting and how can I attend?">
+        <span class="qs-icon" aria-hidden="true">&#128203;</span>
+        <span>Council Meetings</span>
+      </button>
+    </div>
+  </div>
+</section>
 
-                <div class="chat-messages" role="log" aria-label="Chat messages" aria-live="polite" aria-atomic="false">
-                    <div class="message bot">
-                        <div class="message-bubble">
-                            <p><strong>G'day! I'm your City of Melton AI assistant.</strong></p>
-                            <p>I can help you with council services in a few ways:</p>
-                            <ul>
-                                <li><strong>Find information</strong> — Ask me about rates, bins, permits, pets, parks, or any council service and I'll search our knowledge base for the answer.</li>
-                                <li><strong>Get direct links</strong> — I'll point you to the exact page, form, or PDF you need on the council website — no more hunting through menus.</li>
-                                <li><strong>Understand processes</strong> — Planning a build? Registering a pet? I'll walk you through the steps, fees, and who to contact.</li>
-                            </ul>
-                            <p>Try a question below, or just type what you need.</p>
-                        </div>
-                    </div>
-                </div>
+<!-- CouncilGenius -->
+<section class="cg-section" id="cg-chat-region" aria-label="CouncilGenius resident assistant">
+  <div class="cg-inner">
+    <div class="cg-wrapper">
 
-                <div class="chat-input-area">
-                    <div class="input-wrapper">
-                        <label for="chat-input" class="chat-input-label">Type your message</label>
-                        <div class="suggestion-chips" id="suggestions" role="region" aria-label="Suggested questions">
-                            <button class="chip" aria-label="Ask about bin collection days" data-query="When are my bins collected and what goes in each bin?">When is my bin day?</button>
-                            <button class="chip" aria-label="Ask about paying rates" data-query="How do I pay my council rates online and what payment methods are accepted?">How do I pay my rates?</button>
-                            <button class="chip" aria-label="Ask about registering a pet" data-query="How do I register my dog or cat and what are the registration fees?">How do I register my pet?</button>
-                            <button class="chip" aria-label="Ask about leisure centres" data-query="What leisure centres and swimming pools does council manage?">Where are the leisure centres?</button>
-                            <button class="chip" aria-label="Ask about planning permits" data-query="Do I need a planning permit for building work and what are the fees?">Do I need a planning permit?</button>
-                        </div>
-                        <textarea
-                            id="chat-input"
-                            class="chat-input"
-                            placeholder="Type your question..."
-                            aria-label="Message input field"
-                            rows="1"
-                        ></textarea>
-                    </div>
-                    <div class="input-controls">
-                        <button class="voice-btn" id="voice-btn" aria-label="Start voice input" title="Speak your message">
-                            <span aria-hidden="true">🎤</span>
-                        </button>
-                        <button class="send-btn" id="send-btn" aria-label="Send message" disabled>
-                            Send
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+      <!-- Promo -->
+      <div class="cg-promo" aria-hidden="true">
+        <p class="cg-promo-heading">CouncilGenius &mdash; your City of Melton assistant</p>
+        <ul class="cg-promo-list">
+          <li>Rates, bins and waste &mdash; including per-address collection lookup</li>
+          <li>Hard waste bookings and Materials Recovery Facility info</li>
+          <li>Planning and building in the Melton Planning Scheme</li>
+          <li>Pet registration, dog and cat rules, pound information</li>
+          <li>Libraries, parks, kinder and Maternal &amp; Child Health</li>
+          <li>Council meetings, Have Your Say and community engagement</li>
+        </ul>
+        <span class="cg-promo-badge">Available 24 hours a day</span>
+      </div>
 
-    <footer role="contentinfo">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>City of Melton</h4>
-                <p class="acknowledgement">We acknowledge the Traditional Custodians of the lands on which City of Melton Council operates and commit to genuine partnership and respectful relationships.</p>
-            </div>
-
-            <div class="footer-section">
-                <h4>Contact</h4>
-                <a href="tel:0397477200">Phone: (03) 9747 7200</a>
-                <a href="https://www.melton.vic.gov.au" target="_blank">www.melton.vic.gov.au</a>
-                <p style="margin-top: var(--spacing-lg);">Hours: Monday to Friday, 8:30 AM to 5:00 PM</p>
-            </div>
-
-            <div class="footer-section">
-                <h4>Services</h4>
-                <a href="https://www.melton.vic.gov.au" target="_blank">Rates &amp; Property</a>
-                <a href="https://www.melton.vic.gov.au" target="_blank">Planning &amp; Building</a>
-                <a href="https://www.melton.vic.gov.au" target="_blank">Waste &amp; Recycling</a>
-                <a href="https://www.melton.vic.gov.au" target="_blank">Community &amp; Culture</a>
-            </div>
-
-            <div class="footer-section">
-                <h4>Information</h4>
-                <a href="https://www.melton.vic.gov.au" target="_blank">Privacy Policy</a>
-                <a href="https://www.melton.vic.gov.au" target="_blank">Accessibility Statement</a>
-                <a href="https://www.melton.vic.gov.au" target="_blank">Site Map</a>
-            </div>
+      <!-- Chat panel -->
+      <div class="cg-panel" id="cgPanel" role="log" aria-live="polite" aria-label="CouncilGenius chat">
+        <div class="cg-header">
+          <div class="cg-dot" aria-hidden="true"></div>
+          <div class="cg-htext">
+            <div class="cg-hname">CouncilGenius</div>
+            <div class="cg-hsub">City of Melton</div>
+          </div>
+          <button class="tts-btn" id="ttsToggle" aria-label="Toggle text-to-speech" title="Toggle voice reading">&#128266;</button>
         </div>
 
-        <div class="footer-divider">
-            <p class="powered-by">CouncilGenius V8 powered by City of Melton Council</p>
+        <div class="cg-msgs" id="cgMsgs">
+          <div class="message-bot">
+            <div class="message-text">
+              <p><strong>Welcome &mdash; I'm your City of Melton AI assistant.</strong></p>
+              <p>I can help you with City of Melton services in a few ways:</p>
+              <ul>
+                <li><strong>Find information</strong> &mdash; Ask about rates, bins, planning, pets, libraries, parks, or any council service and I'll search the knowledge base.</li>
+                <li><strong>Get direct links</strong> &mdash; I'll point you to the exact page, form, or PDF on melton.vic.gov.au &mdash; no more hunting through menus.</li>
+                <li><strong>Understand processes</strong> &mdash; Lodging a planning application? Booking hard waste? Registering a pet? I'll walk you through the steps, fees, and who to contact.</li>
+              </ul>
+              <p>Try a question below, or just type what you need.</p>
+            </div>
+          </div>
         </div>
-    </footer>
-
-    <script>
-        // Session ID for analytics
-        const SESSION_ID = 'cg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        let conversationHistory = [];
-        let messageIdCounter = 0;
-
-        // DOM Elements
-        const chatMessages = document.querySelector('[role="log"]');
-        const chatInput = document.getElementById('chat-input');
-        const sendBtn = document.getElementById('send-btn');
-        const voiceBtn = document.getElementById('voice-btn');
-        const suggestionsContainer = document.getElementById('suggestions');
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navMenu = document.querySelector('nav ul');
-        const serviceButtons = document.querySelectorAll('.service-btn');
-
-        // Auto-focus on input when chat section is visible
-        chatInput.focus();
-
-        // Enable/disable send button based on input
-        chatInput.addEventListener('input', () => {
-            sendBtn.disabled = !chatInput.value.trim();
-            autoResizeInput();
-        });
-
-        // Handle message send on Enter (Shift+Enter for newline)
-        chatInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-            if (e.key === 'Escape') {
-                chatInput.value = '';
-                chatInput.blur();
-                sendBtn.disabled = true;
-            }
-        });
-
-        // Send button click
-        sendBtn.addEventListener('click', sendMessage);
-
-        // Menu toggle for mobile
-        menuToggle.addEventListener('click', () => {
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
-            navMenu.classList.toggle('active');
-        });
-
-        // Close menu when a link is clicked
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.setAttribute('aria-expanded', 'false');
-                navMenu.classList.remove('active');
-            });
-        });
-
-        // Service buttons click handlers
-        serviceButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const query = btn.dataset.query || btn.textContent.trim();
-                chatInput.value = query;
-                sendBtn.disabled = false;
-                chatInput.focus();
-            });
-        });
-
-        // Suggestion chips
-        document.querySelectorAll('.chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                const query = chip.dataset.query || chip.textContent.trim();
-                chatInput.value = query;
-                sendBtn.disabled = false;
-                chatInput.focus();
-            });
-        });
-
-        // Voice input
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (SpeechRecognition) {
-            const recognition = new SpeechRecognition();
-            recognition.language = 'en-AU';
-
-            voiceBtn.addEventListener('click', () => {
-                recognition.start();
-                voiceBtn.disabled = true;
-                voiceBtn.setAttribute('aria-label', 'Listening...');
-            });
-
-            recognition.addEventListener('result', (event) => {
-                let transcript = '';
-                for (let i = event.resultIndex; i < event.results.length; i++) {
-                    transcript += event.results[i][0].transcript;
-                }
-                chatInput.value = transcript;
-                sendBtn.disabled = !transcript.trim();
-                autoResizeInput();
-            });
-
-            recognition.addEventListener('end', () => {
-                voiceBtn.disabled = false;
-                voiceBtn.setAttribute('aria-label', 'Start voice input');
-            });
-
-            recognition.addEventListener('error', () => {
-                voiceBtn.disabled = false;
-                voiceBtn.setAttribute('aria-label', 'Start voice input');
-            });
-        } else {
-            voiceBtn.style.display = 'none';
-        }
-
-        // Auto-resize textarea
-        function autoResizeInput() {
-            chatInput.style.height = 'auto';
-            chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + 'px';
-        }
-
-        // Send message function
-        async function sendMessage() {
-            const message = chatInput.value.trim();
-            if (!message) return;
-
-            // Hide suggestions on first message
-            if (suggestionsContainer.style.display !== 'none') {
-                suggestionsContainer.style.display = 'none';
-            }
-
-            // Add user message to display
-            addMessageToUI('user', message);
-
-            // Add to conversation history
-            conversationHistory.push({
-                role: 'user',
-                content: message,
-                timestamp: new Date().toISOString()
-            });
-
-            // Clear input
-            chatInput.value = '';
-            sendBtn.disabled = true;
-            chatInput.style.height = 'auto';
-
-            // Show typing indicator
-            const typingId = 'typing_' + messageIdCounter++;
-            addTypingIndicator();
-
-            try {
-                // Call API
-                const response = await fetch('/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        messages: conversationHistory,
-                        sessionId: SESSION_ID
-                    })
-                });
-
-                // Remove typing indicator
-                const typingIndicator = document.querySelector('.typing-indicator');
-                if (typingIndicator) {
-                    typingIndicator.remove();
-                }
-
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                const botMessage = data.response || 'I apologize, I could not process your request.';
-
-                // Add bot message
-                const botMessageId = 'msg_' + messageIdCounter++;
-                addMessageToUI('bot', botMessage, botMessageId);
-
-                // Add to conversation history
-                conversationHistory.push({
-                    role: 'assistant',
-                    content: botMessage,
-                    timestamp: new Date().toISOString()
-                });
-
-                // Add feedback widget
-                addFeedbackWidget(botMessageId, botMessage);
-
-            } catch (error) {
-                console.error('Error:', error);
-                const typingIndicator = document.querySelector('.typing-indicator');
-                if (typingIndicator) {
-                    typingIndicator.remove();
-                }
-
-                // Show error message
-                const errorMsg = `I apologize for the technical difficulty. Please contact City of Melton directly at <a href="tel:0397477200">(03) 9747 7200</a> for immediate assistance.`;
-                addMessageToUI('bot', errorMsg);
-            }
-
-            // Re-focus on input
-            chatInput.focus();
-        }
-
-        // Add message to UI
-        function addMessageToUI(role, content, messageId = null) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${role}`;
-            if (messageId) {
-                msgDiv.id = messageId;
-            }
-
-            const bubble = document.createElement('div');
-            bubble.className = 'message-bubble';
-            bubble.innerHTML = mdToHtml(content);
-            msgDiv.appendChild(bubble);
-
-            chatMessages.appendChild(msgDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Add typing indicator
-        function addTypingIndicator() {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = 'message bot';
-
-            const indicator = document.createElement('div');
-            indicator.className = 'typing-indicator';
-            indicator.setAttribute('role', 'status');
-            indicator.setAttribute('aria-live', 'polite');
-            indicator.setAttribute('aria-label', 'Assistant is typing');
-
-            indicator.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-            msgDiv.appendChild(indicator);
-
-            chatMessages.appendChild(msgDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Add feedback widget
-        function addFeedbackWidget(messageId, messagePreview) {
-            const msgElement = document.getElementById(messageId);
-            if (!msgElement) return;
-
-            const widget = document.createElement('div');
-            widget.className = 'feedback-widget';
-            widget.setAttribute('role', 'region');
-            widget.setAttribute('aria-label', 'Feedback for this response');
-
-            const thumbsUp = document.createElement('button');
-            thumbsUp.className = 'feedback-btn';
-            thumbsUp.setAttribute('aria-label', 'This response was helpful');
-            thumbsUp.setAttribute('aria-pressed', 'false');
-            thumbsUp.textContent = '+ Helpful';
-
-            const thumbsDown = document.createElement('button');
-            thumbsDown.className = 'feedback-btn';
-            thumbsDown.setAttribute('aria-label', 'This response was not helpful');
-            thumbsDown.setAttribute('aria-pressed', 'false');
-            thumbsDown.textContent = '- Not helpful';
-
-            thumbsUp.addEventListener('click', () => {
-                const isPressed = thumbsUp.getAttribute('aria-pressed') === 'true';
-                thumbsUp.setAttribute('aria-pressed', !isPressed);
-                if (!isPressed) {
-                    thumbsDown.setAttribute('aria-pressed', 'false');
-                    sendFeedback(1, messagePreview);
-                }
-            });
-
-            thumbsDown.addEventListener('click', () => {
-                const isPressed = thumbsDown.getAttribute('aria-pressed') === 'true';
-                thumbsDown.setAttribute('aria-pressed', !isPressed);
-                if (!isPressed) {
-                    thumbsUp.setAttribute('aria-pressed', 'false');
-                    sendFeedback(0, messagePreview);
-                }
-            });
-
-            widget.appendChild(thumbsUp);
-            widget.appendChild(thumbsDown);
-            msgElement.querySelector('.message-bubble').appendChild(widget);
-        }
-
-        // Send feedback to server
-        async function sendFeedback(rating, messagePreview) {
-            try {
-                await fetch('/feedback', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        rating: rating,
-                        message: messagePreview.substring(0, 200),
-                        sessionId: SESSION_ID,
-                        timestamp: new Date().toISOString()
-                    })
-                });
-            } catch (error) {
-                console.error('Feedback error:', error);
-            }
-        }
-
-        // Markdown to HTML converter
-        function processInline(text) {
-            // Handle markdown links: [text](url)
-            text = text.replace(/\[([^\]]+)\]\(((?:https?:\/\/|tel:|mailto:)[^\)]+)\)/g, (match, linkText, url) => {
-                const target = url.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
-                return `<a href="${url}"${target}>${linkText}</a>`;
-            });
-
-            // Handle plain URLs
-            text = text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-
-            // Handle phone numbers
-            text = text.replace(/(\d{2}\s\d{4}\s\d{4})/g, '<a href="tel:$1">$1</a>');
-
-            // Handle **bold**
-            text = text.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
-
-            // Handle *italic*
-            text = text.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
-
-            return text;
-        }
-
-        function mdToHtml(text) {
-            const lines = text.split('\n');
-            const html = [];
-            let i = 0;
-
-            while (i < lines.length) {
-                const line = lines[i];
-
-                // Skip empty lines
-                if (!line.trim()) {
-                    i++;
-                    continue;
-                }
-
-                // Handle ## headings
-                if (line.startsWith('## ')) {
-                    html.push(`<h2>${processInline(line.substring(3).trim())}</h2>`);
-                    i++;
-                    continue;
-                }
-
-                // Handle bullet lists (-)
-                if (line.trim().startsWith('- ')) {
-                    const listItems = [];
-                    while (i < lines.length && lines[i].trim().startsWith('- ')) {
-                        const item = lines[i].trim().substring(2);
-                        listItems.push(`<li>${processInline(item)}</li>`);
-                        i++;
-                    }
-                    html.push(`<ul>${listItems.join('')}</ul>`);
-                    continue;
-                }
-
-                // Handle numbered lists
-                if (/^\d+\.\s/.test(line.trim())) {
-                    const listItems = [];
-                    while (i < lines.length && /^\d+\.\s/.test(lines[i].trim())) {
-                        const item = lines[i].trim().replace(/^\d+\.\s/, '');
-                        listItems.push(`<li>${processInline(item)}</li>`);
-                        i++;
-                    }
-                    html.push(`<ol>${listItems.join('')}</ol>`);
-                    continue;
-                }
-
-                // Handle horizontal rules (---)
-                if (line.trim() === '---' || line.trim() === '---') {
-                    html.push('<hr>');
-                    i++;
-                    continue;
-                }
-
-                // Default: wrap in paragraph
-                html.push(`<p>${processInline(line)}</p>`);
-                i++;
-            }
-
-            return html.join('');
-        }
-
-        // Focus trap in chat
-        const chatContainer = document.querySelector('.chat-container');
-        const focusableElements = chatContainer.querySelectorAll(
-            'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-
-        if (focusableElements.length > 0) {
-            const firstFocusable = focusableElements[0];
-            const lastFocusable = focusableElements[focusableElements.length - 1];
-
-            chatContainer.addEventListener('keydown', (e) => {
-                if (e.key !== 'Tab') return;
-
-                if (e.shiftKey) {
-                    if (document.activeElement === firstFocusable) {
-                        lastFocusable.focus();
-                        e.preventDefault();
-                    }
-                } else {
-                    if (document.activeElement === lastFocusable) {
-                        firstFocusable.focus();
-                        e.preventDefault();
-                    }
-                }
-            });
-        }
-    </script>
+
+        <div class="cg-hint" id="cgHint">Ask me anything about council services</div>
+
+        <div class="cg-chips" id="cgChips">
+          <button class="chip" data-query="How do I find out which bin goes out on what day at my City of Melton address?">Bin day</button>
+          <button class="chip" data-query="How do I pay my City of Melton rates and what payment methods are accepted?">Pay rates</button>
+          <button class="chip" data-query="How do I book a hard-waste collection in the City of Melton?">Hard waste</button>
+          <button class="chip" data-query="Do I need a planning permit in the City of Melton?">Planning permit</button>
+          <button class="chip" data-query="How do I register my dog or cat with the City of Melton?">Pet registration</button>
+        </div>
+
+        <!-- V10: "Find me the..." direct PDF shortcuts -->
+        <div class="cg-pdf-shortcuts" id="cgPdfShortcuts" aria-label="Find me the ...">
+          <button class="pdf-shortcut" data-pdf="council plan">Council Plan</button>
+          <button class="pdf-shortcut" data-pdf="annual budget">Budget</button>
+          <button class="pdf-shortcut" data-pdf="annual report">Annual Report</button>
+          <button class="pdf-shortcut" data-pdf="community vision">Community Vision</button>
+          <button class="pdf-shortcut" data-pdf="asset plan">Asset Plan</button>
+        </div>
+
+        <div class="cg-input-row">
+          <label class="sr-only" for="cgInput">Type your question to CouncilGenius</label>
+          <div class="cg-autocomplete-wrap">
+            <div class="cg-autocomplete" id="cgAutocomplete" role="listbox" aria-label="Query suggestions"></div>
+            <textarea id="cgInput" class="cg-ta" placeholder="Ask me anything about council services..." rows="1" aria-label="Message to CouncilGenius" autocomplete="off"></textarea>
+          </div>
+          <button class="mic-btn" id="micBtn" aria-label="Voice input &mdash; click to speak. Works best in Chrome on desktop.">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+            </svg>
+          </button>
+          <button class="send-btn" id="sendBtn" aria-label="Send message">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+
+      <div>
+        <a class="f-logo" href="https://www.melton.vic.gov.au/" aria-label="City of Melton">
+          <div class="f-shield" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6L12 2z"/></svg>
+          </div>
+          <div class="f-wordmark">
+            <strong>City of Melton</strong>
+            <span>Victoria, Australia</span>
+          </div>
+        </a>
+        <p class="f-acknowledgement">The City of Melton respectfully acknowledges the Traditional Owners of the land on which the municipality is located &mdash; the Wadawurrung, Bunurong, and Wurundjeri Woi Wurrung peoples of the Kulin Nations &mdash; and pays respect to their Elders past and present.</p>
+        <div class="f-social">
+          <a href="https://www.facebook.com/CityofMelton" aria-label="Facebook" target="_blank" rel="noopener">fb</a>
+          <a href="https://www.instagram.com/cityofmelton/" aria-label="Instagram" target="_blank" rel="noopener">ig</a>
+          <a href="https://www.youtube.com/user/cityofmelton" aria-label="YouTube" target="_blank" rel="noopener">yt</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="https://www.melton.vic.gov.au/Council/Contact-Us">Contact Council</a></li>
+          <li><a href="https://www.melton.vic.gov.au/Residents/Rates">Pay Rates</a></li>
+          <li><a href="https://www.melton.vic.gov.au/Residents/Waste-and-recycling">Waste &amp; Recycling</a></li>
+          <li><a href="https://www.melton.vic.gov.au/Residents/Planning-and-building">Planning &amp; Building</a></li>
+          <li><a href="https://www.melton.vic.gov.au/Residents/Pets-and-animals">Pets &amp; Animals</a></li>
+          <li><a href="https://www.melton.vic.gov.au/Residents/Libraries">Libraries</a></li>
+          <li><a href="https://www.melton.vic.gov.au/My-Area">My Area</a></li>
+          <li><a href="https://haveyoursay.melton.vic.gov.au/">Have Your Say</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p><strong>Civic Centre</strong></p>
+        <p>232 High Street, Melton VIC 3337</p>
+        <p><a href="tel:0397477200">(03) 9747 7200</a></p>
+        <p><a href="mailto:csu@melton.vic.gov.au">csu@melton.vic.gov.au</a></p>
+        <p style="margin-top:12px">Mon&ndash;Fri 8:30 am &ndash; 5:00 pm</p>
+        <p class="f-emergency">After hours &amp; emergencies: <a href="tel:0397477200">(03) 9747 7200</a></p>
+        <p style="margin-top:12px"><strong>National Relay Service</strong></p>
+        <p>TTY users: 133 677, then (03) 9747 7200</p>
+      </div>
+
+    </div>
+    <div class="footer-bottom">
+      <span>&#169; 2026 City of Melton &#183; Powered by <a href="https://techentity.com.au" target="_blank" rel="noopener">TechEntity CouncilGenius</a></span>
+      <span>
+        <a href="https://www.melton.vic.gov.au/Council/Governance/Privacy">Privacy Policy</a> &middot;
+        <a href="https://www.melton.vic.gov.au/Council/Accessibility">Accessibility</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const API_URL = '/chat';
+let messages = [];
+let ttsEnabled = false;
+let chatEngaged = false;
+let lastUserMsg = '';
+let lastBotMsg = '';
+
+// Engagement
+function engageChat() {
+  if (!chatEngaged) {
+    chatEngaged = true;
+    document.querySelector('.cg-section').classList.add('cg-engaged');
+    setTimeout(() => {
+      document.querySelector('.cg-section').scrollIntoView({behavior:'smooth', block:'start'});
+    }, 50);
+  }
+}
+
+// fmt()
+function fmt(text) {
+  text = text.replace(/[\u{1F000}-\u{1FFFF}]/gu,'')
+             .replace(/[\u{1F300}-\u{1F9FF}]/gu,'')
+             .replace(/[\u{1FA00}-\u{1FFFF}]/gu,'')
+             .replace(/[\u2600-\u27BF]/gu,'')
+             .replace(/[\u2700-\u27BF]/gu,'')
+             .replace(/[\uFE00-\uFE0F]/gu,'');
+  text = text.replace(/<a\s+[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/gi,
+    (_, url, label) => `[${label.trim()}](${url})`);
+  text = text.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+             .replace(/__(.+?)__/g,'<b>$1</b>');
+  text = text.replace(/\[([^\]]+)\]\((tel:[^)]+)\)/g,
+    '<a href="$2">$1</a>');
+  text = text.replace(/\[([^\]]+)\]\((mailto:[^)]+)\)/g,
+    '<a href="$2">$1</a>');
+  text = text.replace(/\[([^\]]+)\]\((\/pdfs\/[^)]+)\)/g,
+    '<a href="$2">$1</a>');
+  text = text.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  text = text.replace(
+    /(?<![="(\[])(https?:\/\/[^\s<>)"]+|tel:[^\s<>)"]+|mailto:[^\s<>)"]+|\/pdfs\/[^\s<>)"]+)/g,
+    (url) => {
+      let label = url;
+      if (url.startsWith('tel:')) label = url.replace('tel:','');
+      else if (url.startsWith('mailto:')) label = url.replace('mailto:','');
+      else if (url.startsWith('/pdfs/')) label = url.split('/').pop().replace('.pdf','').replace(/-/g,' ');
+      const t = url.startsWith('/') ? '' : ' target="_blank" rel="noopener"';
+      return `<a href="${url}"${t}>${label}</a>`;
+    }
+  );
+  text = text.replace(/^[-*] (.+)$/gm, '<li>$1</li>');
+  text = text.replace(/(<li>[\s\S]*?<\/li>\n?)+/g, m =>
+    '<ul style="padding-left:1.3em;margin:5px 0">' + m + '</ul>');
+  return text.replace(/\n/g,'<br>');
+}
+
+// TTS
+function stripForSpeech(html) {
+  return html.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+}
+function toggleTTS() {
+  ttsEnabled = !ttsEnabled;
+  document.getElementById('ttsToggle').innerHTML = ttsEnabled ? '&#128266;' : '&#128263;';
+  if (!ttsEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+}
+function speakText(text) {
+  if (!ttsEnabled || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+  let i = 0;
+  function next() {
+    if (i >= sentences.length) return;
+    const u = new SpeechSynthesisUtterance(sentences[i++]);
+    u.rate = 0.95; u.onend = next;
+    window.speechSynthesis.speak(u);
+  }
+  next();
+}
+
+// Feedback
+function sendFeedback(rating) {
+  fetch('/feedback', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({query: lastUserMsg, response: lastBotMsg, rating})
+  }).catch(()=>{});
+}
+
+// Messages
+function addMsg(role, html, raw) {
+  const msgs = document.getElementById('cgMsgs');
+  const d = document.createElement('div');
+  d.className = 'msg ' + role;
+  d.innerHTML = html;
+  msgs.appendChild(d);
+  if (role === 'bot') {
+    lastBotMsg = raw || html;
+    const fb = document.createElement('div');
+    fb.className = 'fb-row';
+    fb.innerHTML = '<button class="fb-btn" aria-label="Good answer" onclick="this.classList.add(\'active\');sendFeedback(\'up\')">&#128077;</button>'
+                 + '<button class="fb-btn" aria-label="Poor answer" onclick="this.classList.add(\'active\');sendFeedback(\'down\')">&#128078;</button>';
+    msgs.appendChild(fb);
+    speakText(stripForSpeech(html));
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function addTyping() {
+  const msgs = document.getElementById('cgMsgs');
+  const d = document.createElement('div');
+  d.className = 'msg bot typing'; d.id = 'cgTyping';
+  d.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function removeTyping() {
+  const t = document.getElementById('cgTyping');
+  if (t) t.remove();
+}
+
+// Send
+async function sendMessage(text) {
+  text = text.trim();
+  if (!text) return;
+  engageChat();
+  document.getElementById('cgChips').style.display = 'none';
+  document.getElementById('cgHint').style.display = 'none';
+  lastUserMsg = text;
+  messages.push({role:'user', content:text});
+  addMsg('user', text);
+  document.getElementById('cgInput').value = '';
+  autoResize();
+  addTyping();
+  try {
+    const r = await fetch(API_URL, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({messages})
+    });
+    const data = await r.json();
+    removeTyping();
+    if (data.reply) {
+      messages.push({role:'assistant', content:data.reply});
+      addMsg('bot', fmt(data.reply), data.reply);
+    } else {
+      addMsg('bot', 'Sorry, there was a problem getting a response. Please call the City of Melton on <a href="tel:0397477200">(03) 9747 7200</a>.');
+    }
+  } catch(e) {
+    removeTyping();
+    addMsg('bot', 'Could not connect. Please try again or call the City of Melton on <a href="tel:0397477200">(03) 9747 7200</a>.');
+  }
+}
+function sendChip(text) { engageChat(); sendMessage(text); }
+document.querySelectorAll('.qs-item, .chip').forEach(function(btn){ btn.onclick=function(){ sendChip(btn.getAttribute('data-query')); }; });
+
+// Auto-resize
+function autoResize() {
+  const ta = document.getElementById('cgInput');
+  ta.style.height = 'auto';
+  ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
+}
+
+// Event listeners
+document.getElementById('sendBtn').addEventListener('click', () =>
+  sendMessage(document.getElementById('cgInput').value));
+document.getElementById('cgInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(e.target.value); }
+});
+document.getElementById('cgInput').addEventListener('input', autoResize);
+document.getElementById('cgInput').addEventListener('focus', () => engageChat());
+document.getElementById('ttsToggle').addEventListener('click', toggleTTS);
+
+// Voice input
+const micBtn = document.getElementById('micBtn');
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const rec = new SR();
+  rec.continuous = false; rec.interimResults = false; rec.lang = 'en-AU';
+  rec.onresult = e => {
+    const heard = e.results[0][0].transcript;
+    document.getElementById('cgInput').value = heard;
+    autoResize(); micBtn.classList.remove('recording');
+  };
+  rec.onerror = (ev) => {
+    micBtn.classList.remove('recording');
+    let msg = "I didn't quite catch that &mdash; could you try again, or type it?";
+    if (ev && ev.error === 'not-allowed') {
+      msg = "I need mic permission to listen. Check your browser settings, or just type your question.";
+    } else if (ev && ev.error === 'no-speech') {
+      msg = "I didn't hear anything &mdash; try again, or type your question.";
+    } else if (ev && ev.error === 'network') {
+      msg = "Voice input needs a network connection &mdash; I couldn't reach the speech service. Please type instead.";
+    }
+    engageChat();
+    addMsg('bot', '<i>' + msg + '</i>');
+  };
+  rec.onend = () => micBtn.classList.remove('recording');
+  micBtn.addEventListener('click', () => {
+    if (micBtn.classList.contains('recording')) { rec.stop(); micBtn.classList.remove('recording'); }
+    else {
+      try { rec.start(); micBtn.classList.add('recording'); engageChat(); }
+      catch (e) {
+        engageChat();
+        addMsg('bot', "<i>I couldn't start the mic right now &mdash; please try again in a moment, or type your question.</i>");
+      }
+    }
+  });
+} else {
+  micBtn.disabled = true;
+  micBtn.title = 'Voice input not supported in this browser &mdash; please type your question.';
+  micBtn.style.opacity = '0.4';
+  micBtn.style.cursor = 'not-allowed';
+  micBtn.addEventListener('click', () => {
+    engageChat();
+    addMsg('bot', '<i>Voice input is not supported in your browser &mdash; please type your question into the box.</i>');
+  });
+}
+
+// V10: autocomplete + PDF direct lookup
+const cgAuto = document.getElementById('cgAutocomplete');
+let _suggestTimer = null;
+let _activeSuggestIdx = -1;
+
+function renderSuggestions(list) {
+  if (!cgAuto) return;
+  if (!list || list.length === 0) { cgAuto.classList.remove('show'); cgAuto.innerHTML = ''; return; }
+  cgAuto.innerHTML = list.map((s, i) =>
+    `<div class="cg-autocomplete-item" role="option" data-idx="${i}" data-value="${s.replace(/"/g,'&quot;')}">${s}</div>`
+  ).join('');
+  cgAuto.classList.add('show');
+  _activeSuggestIdx = -1;
+  cgAuto.querySelectorAll('.cg-autocomplete-item').forEach(el => {
+    el.addEventListener('mousedown', (ev) => {
+      ev.preventDefault();
+      const v = el.getAttribute('data-value') || '';
+      document.getElementById('cgInput').value = v;
+      cgAuto.classList.remove('show');
+      autoResize();
+    });
+  });
+}
+
+function fetchSuggestions(q) {
+  if (!q || q.length < 2) { renderSuggestions([]); return; }
+  fetch('/suggest?q=' + encodeURIComponent(q))
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => renderSuggestions(d.suggestions || []))
+    .catch(() => renderSuggestions([]));
+}
+
+document.getElementById('cgInput').addEventListener('input', (e) => {
+  clearTimeout(_suggestTimer);
+  const val = e.target.value.trim();
+  _suggestTimer = setTimeout(() => fetchSuggestions(val), 200);
+});
+document.getElementById('cgInput').addEventListener('blur', () => {
+  setTimeout(() => cgAuto && cgAuto.classList.remove('show'), 120);
+});
+document.getElementById('cgInput').addEventListener('keydown', (e) => {
+  if (!cgAuto || !cgAuto.classList.contains('show')) return;
+  const items = cgAuto.querySelectorAll('.cg-autocomplete-item');
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    _activeSuggestIdx = Math.min(_activeSuggestIdx + 1, items.length - 1);
+    items.forEach((el, i) => el.classList.toggle('active', i === _activeSuggestIdx));
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    _activeSuggestIdx = Math.max(_activeSuggestIdx - 1, 0);
+    items.forEach((el, i) => el.classList.toggle('active', i === _activeSuggestIdx));
+  } else if (e.key === 'Escape') {
+    cgAuto.classList.remove('show');
+  } else if (e.key === 'Tab' && _activeSuggestIdx >= 0) {
+    e.preventDefault();
+    const v = items[_activeSuggestIdx].getAttribute('data-value') || '';
+    document.getElementById('cgInput').value = v;
+    cgAuto.classList.remove('show');
+    autoResize();
+  }
+});
+
+// "Find me the..." PDF direct lookup
+function renderPdfResult(data, originalQ) {
+  if (!data) {
+    addMsg('bot', "<i>I couldn't reach the PDF index &mdash; please call the City of Melton on <a href='tel:0397477200'>(03) 9747 7200</a>.</i>");
+    return;
+  }
+  if (data.status === 'ok') {
+    const html = `<b>Here's the ${originalQ} PDF:</b><br>`
+               + `<a href="${data.url}" target="_blank" rel="noopener">${data.title}</a>`
+               + `<br><span style="opacity:.6;font-size:11px">Match confidence: ${Math.round((data.confidence||0)*100)}%</span>`;
+    addMsg('bot', html, html);
+    return;
+  }
+  if (data.status === 'clarify' && Array.isArray(data.top3)) {
+    const header = `<b>${data.question || "A few possible matches &mdash; which one?"}</b>`;
+    const items  = data.top3.map(d =>
+      `<button class="cg-clarify-btn" onclick="window.open('${d.url}','_blank')"><b>${d.title}</b><span>${d.doc_id}</span></button>`
+    ).join('');
+    addMsg('bot', header + '<div class="cg-clarify">' + items + '</div>');
+    return;
+  }
+  const fallback = (data.fallback || '(03) 9747 7200');
+  addMsg('bot',
+    `<i>I couldn't find a matching PDF for "${originalQ}". `
+  + `Call <a href="tel:${String(fallback).replace(/[^0-9]/g,'')}">${fallback}</a> or try rephrasing.</i>`);
+}
+
+function runPdfShortcut(term) {
+  engageChat();
+  document.getElementById('cgChips').style.display = 'none';
+  document.getElementById('cgHint').style.display = 'none';
+  const userLine = 'Find me the ' + term;
+  addMsg('user', userLine);
+  addTyping();
+  fetch('/pdf_lookup?q=' + encodeURIComponent(term))
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => { removeTyping(); renderPdfResult(d, term); })
+    .catch(() => { removeTyping(); renderPdfResult(null, term); });
+}
+
+document.querySelectorAll('.pdf-shortcut').forEach(btn => {
+  btn.addEventListener('click', () => runPdfShortcut(btn.getAttribute('data-pdf') || ''));
+});
+window.runPdfShortcut = runPdfShortcut;
+</script>
 </body>
 </html>
