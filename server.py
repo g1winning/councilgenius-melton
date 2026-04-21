@@ -498,10 +498,21 @@ def log_feedback(query: str, response: str, rating: str):
 
 def call_claude(messages: list) -> str:
     api_key = get_api_key()
+    # Prompt caching on the system block: the KB is ~28k input tokens and
+    # would otherwise consume the org's 30k ITPM on every single /chat call.
+    # Marking the system block ephemeral lets the second-and-subsequent
+    # requests within 5 minutes count at ~10% of normal ITPM, lifting
+    # throughput from ~1 req/min to ~10-20 req/min.
     payload = json.dumps({
         'model': 'claude-sonnet-4-6',
         'max_tokens': 1024,
-        'system': SYSTEM_PROMPT,
+        'system': [
+            {
+                'type': 'text',
+                'text': SYSTEM_PROMPT,
+                'cache_control': {'type': 'ephemeral'}
+            }
+        ],
         'messages': messages
     }).encode('utf-8')
     req = urllib.request.Request(
